@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 
+// I will use a pure function here since we don't have a state in this component
 function TypingResults({ title, data }) {
   return (
     <div className="status-inner">
