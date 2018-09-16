@@ -2,7 +2,7 @@
 
 ## Quick start
 
-1. Clone the repo `git@github.com:raideltorres/NumberEightCalendar.git`
+1. Clone the repo `git@github.com:raideltorres/typing-challenge.git`
 3. Run `yarn` in order to install dependencies
 4. Run the project with `yarn start`
 5. Browse `localhost:3000`
