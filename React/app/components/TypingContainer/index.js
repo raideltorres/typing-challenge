@@ -27,6 +27,7 @@ class TypingContainer extends React.Component { // eslint-disable-line react/pre
     this.state = {
       timerDisplay: false,
       results: false,
+      sampleText: 'This is a sample text to type'
     };
   }
 
@@ -44,10 +45,10 @@ class TypingContainer extends React.Component { // eslint-disable-line react/pre
 
     // Stop Condition of the test. In this case the stop condition will be
     // when the user types in the same number of characters as in the sample text.
-    // since in this case the sample text have a fixed length of 26 characters
+    // since in this case the sample text have a fixed length of 29 characters
     // I will code the stop condition based on that, I could create a variable
     // sample text but I don't think that is asked in the requirements
-    if (this.props.typingData.text.length >= 26 - 1) {
+    if (this.props.typingData.text.length >= this.state.sampleText.length - 1) {
       this.setState({
         results: true,
       });
@@ -80,7 +81,7 @@ class TypingContainer extends React.Component { // eslint-disable-line react/pre
               <Paper className="section input">
                 <Typography align="center" className="description">
                   {
-                    `In this app we will use a fixed sample text that will be "Lorem ipsum dolor sit amet".
+                    `In this app we will use a fixed sample text that will be "${this.state.sampleText}".
                     So the test will start wen the user types the first character in the input below and
                     it will end wen the user types the same number of characters as in the sample text
                     (26 in this case)`

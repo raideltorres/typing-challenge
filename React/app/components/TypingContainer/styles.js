@@ -13,21 +13,25 @@ export const Typing = styled.div`
       padding: 1rem;
     }
 
-    &.result, &.input {
-      height: calc(100vh / 6);
+    &.result {
+      height: calc(100vh / 5);
+
+      h1 {
+        font-size: 1.5rem;
+      }
     }
 
     &.input {
-      padding-bottom: 2rem;
+      height: calc(100vh / 3);
       flex-direction: column;
 
       .description {
-        margin-bottom: 4rem;
+        margin-bottom: 1rem;
       }
     }
 
     &.status {
-      height: calc(100vh - ((100vh / 6) * 2) - 4rem);
+      height: calc(100vh - ((100vh / 5) + (100vh / 3)) - 4rem);
 
       .status-inner {
         display: flex;
@@ -44,10 +48,20 @@ export const Typing = styled.div`
 
       &.result, &.input {
         height: calc(100vh / 2 - 2rem);
+
+        h1 {
+          font-size: 2.8125rem;
+        }
       }
 
       &.status {
         height: calc(100vh - 2rem);
+      }
+
+      &.input {
+        .description {
+          margin-bottom: 4rem;
+        }
       }
     }
   }
