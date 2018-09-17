@@ -56,7 +56,7 @@ class TypingContainer extends React.Component { // eslint-disable-line react/pre
     // since in this case the sample text have a fixed length of 29 characters
     // I will code the stop condition based on that, I could create a variable
     // sample text but I don't think that is asked in the requirements
-    if (this.props.typingData.text.length >= this.state.sampleText.length - 1) {
+    if (event.target.value.length >= this.state.sampleText.length) {
       this.setState({
         results: true,
       });
