@@ -126,7 +126,7 @@ class TypingContainer extends React.Component { // eslint-disable-line react/pre
                     `In this app we will use a fixed sample text that will be "${this.state.sampleText}".
                     So the test will start wen the user types the first character in the input below and
                     it will end wen the user types the same number of characters as in the sample text
-                    (26 in this case)`
+                    (29 in this case)`
                   }
                 </Typography>
                 <TextField
