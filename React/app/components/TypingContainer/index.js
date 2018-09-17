@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Spelling from 'spelling';
 
 // Importing the defined actions
 import * as HomeActions from '../../containers/Home/actions';
@@ -19,6 +20,9 @@ import { Typing } from './styles';
 import TypingResults from '../TypingResults';
 import Timer from '../Timer';
 
+// Creating dictionary object
+const dictionary = require('../../../node_modules/spelling/dictionaries/en_US.js');
+
 // TypingContainer component
 class TypingContainer extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor() {
@@ -27,8 +31,12 @@ class TypingContainer extends React.Component { // eslint-disable-line react/pre
     this.state = {
       timerDisplay: false,
       results: false,
+      dict: Spelling(dictionary),
       sampleText: 'This is a sample text to type'
     };
+
+    // Inserting 'is' word since this dictionary doesn’t have it
+    this.state.dict.insert('is');
   }
 
   // Redux action to change data
@@ -72,6 +80,40 @@ class TypingContainer extends React.Component { // eslint-disable-line react/pre
     return (words / minutes).toFixed(2);
   }
 
+  countTypingErrors() {
+    // Getting all words typed using regular expressions
+    const words = this.props.typingData.text.trim().split(/\s+/);
+    const wordsFound = words.length;
+
+    // Checking words against dictionary
+    const wordsChecked = this.state.dict.lookup(words);
+
+    // Getting the amount of typing errors
+    let errorsFound = 0;
+    wordsChecked.forEach((word) => {
+      errorsFound += word.found ? 0 : 1;
+    });
+
+    return `${(errorsFound / wordsFound * 100).toFixed(2)}%`;
+  }
+
+  displayTypingErrors() {
+    // Getting all words typed using regular expressions
+    const words = this.props.typingData.text.trim().split(/\s+/);
+
+    // Checking words against dictionary
+    const wordsChecked = this.state.dict.lookup(words);
+
+    // Creating the resulting words with the errors marked
+    const result = wordsChecked.map((word, index) => {
+      return <Typography variant="display2" color={word.found ? 'default' : 'error'} align="center" key={index}>
+        { word.word }
+      </Typography>
+    });
+
+    return result;
+  }
+
   render() {
     return (
       <Typing>
@@ -98,9 +140,7 @@ class TypingContainer extends React.Component { // eslint-disable-line react/pre
             </Grid>
             <Grid item xs={12}>
               <Paper className="section result">
-                <Typography variant="display2" align="center">
-                  { this.props.typingData.text }
-                </Typography>
+                { this.displayTypingErrors() }
               </Paper>
             </Grid>
           </Grid>
@@ -121,10 +161,16 @@ class TypingContainer extends React.Component { // eslint-disable-line react/pre
                       />
                       {
                         this.state.results ?
-                          <TypingResults
-                            title={'Words per minute'}
-                            data={this.countWordsPerMinute()}
-                          /> : null
+                          <div>
+                            <TypingResults
+                              title={'Words per minute'}
+                              data={this.countWordsPerMinute()}
+                            />
+                            <TypingResults
+                              title={'Error percentage'}
+                              data={this.countTypingErrors()}
+                            />
+                          </div> : null
                       }
                     </div> :
                     <Typography variant="display1" align="center">
